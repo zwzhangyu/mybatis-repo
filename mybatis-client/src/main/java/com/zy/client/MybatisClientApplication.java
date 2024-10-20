@@ -1,4 +1,4 @@
-package com.zy.mybatisclient;
+package com.zy.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MybatisClientApplication {
 
     public static void main(String[] args) {
+
+
         SpringApplication.run(MybatisClientApplication.class, args);
     }
 

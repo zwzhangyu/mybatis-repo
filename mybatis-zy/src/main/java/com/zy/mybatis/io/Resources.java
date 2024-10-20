@@ -16,6 +16,6 @@ public class Resources {
      * @return
      */
     public static InputStream getResource(String path) {
-        return Resources.class.getResourceAsStream(path);
+        return Resources.class.getClassLoader().getResourceAsStream(path);
     }
 }
