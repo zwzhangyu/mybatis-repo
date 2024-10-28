@@ -57,25 +57,31 @@ public class XMLStatementBuilder extends BaseBuilder {
    * 解析SQL执行语句
    */
   public void parseStatementNode() {
+    // 执行SQL标识
     String id = context.getStringAttribute("id");
+    // 获取数据库厂商标识，未配置就是为空
     String databaseId = context.getStringAttribute("databaseId");
-
     if (!databaseIdMatchesCurrent(id, databaseId, this.requiredDatabaseId)) {
       return;
     }
-
+    // 指的是：select|insert|update|delete
     String nodeName = context.getNode().getNodeName();
+    // 转换为标准的执行SqlCommandType
     SqlCommandType sqlCommandType = SqlCommandType.valueOf(nodeName.toUpperCase(Locale.ENGLISH));
+    // 判断是否是查询语句
     boolean isSelect = sqlCommandType == SqlCommandType.SELECT;
+    // 将其设置为 true 后，只要语句被调用，都会导致本地缓存和二级缓存被清空，默认值：（对 insert、update 和 delete 语句）true。
     boolean flushCache = context.getBooleanAttribute("flushCache", !isSelect);
+    // 将其设置为 true 后，将会导致本条语句的结果被二级缓存缓存起来
     boolean useCache = context.getBooleanAttribute("useCache", isSelect);
     boolean resultOrdered = context.getBooleanAttribute("resultOrdered", false);
 
     // Include Fragments before parsing
     XMLIncludeTransformer includeParser = new XMLIncludeTransformer(configuration, builderAssistant);
     includeParser.applyIncludes(context.getNode());
-
+    // 入参参数类型全路径
     String parameterType = context.getStringAttribute("parameterType");
+    // 根据入参参数类型全路径转换为Class
     Class<?> parameterTypeClass = resolveClass(parameterType);
 
     String lang = context.getStringAttribute("lang");
@@ -95,6 +101,7 @@ public class XMLStatementBuilder extends BaseBuilder {
         configuration.isUseGeneratedKeys() && SqlCommandType.INSERT.equals(sqlCommandType))
         ? Jdbc3KeyGenerator.INSTANCE : NoKeyGenerator.INSTANCE;
     }
+
     // 创建SqlSource，解析SQL，封装SQL语句，参数绑定和入参信息
     SqlSource sqlSource = langDriver.createSqlSource(configuration, context, parameterTypeClass);
     StatementType statementType = StatementType.valueOf(context.getStringAttribute("statementType", StatementType.PREPARED.toString()));
