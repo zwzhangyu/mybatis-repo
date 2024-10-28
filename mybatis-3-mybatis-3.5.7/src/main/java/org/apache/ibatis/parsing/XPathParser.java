@@ -124,6 +124,7 @@ public class XPathParser {
 
   public XPathParser(InputStream inputStream, boolean validation, Properties variables, EntityResolver entityResolver) {
     commonConstructor(validation, variables, entityResolver);
+    // 解析XML文档为Document对象
     this.document = createDocument(new InputSource(inputStream));
   }
 
