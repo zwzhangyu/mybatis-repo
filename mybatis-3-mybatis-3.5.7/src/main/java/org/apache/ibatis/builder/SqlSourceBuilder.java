@@ -40,6 +40,10 @@ public class SqlSourceBuilder extends BaseBuilder {
     super(configuration);
   }
 
+  /**
+   * 这段代码是 SqlSourceParser 的 parse 方法，它负责将包含 #{} 占位符的 SQL 字符串解析为 StaticSqlSource 对象。
+   * StaticSqlSource 表示一个纯静态的 SQL 源，适合不含动态 SQL 标签的场景。以下是对这段源码的详细分析
+   */
   public SqlSource parse(String originalSql, Class<?> parameterType, Map<String, Object> additionalParameters) {
     ParameterMappingTokenHandler handler = new ParameterMappingTokenHandler(configuration, parameterType, additionalParameters);
     GenericTokenParser parser = new GenericTokenParser("#{", "}", handler);

@@ -1,17 +1,17 @@
 /**
- *    Copyright 2009-2019 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2009-2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.apache.ibatis.scripting.xmltags;
 
@@ -47,10 +47,15 @@ public class XMLScriptBuilder extends BaseBuilder {
     super(configuration);
     this.context = context;
     this.parameterType = parameterType;
+    // 初始化动态SQL中的节点处理器集合
     initNodeHandlerMap();
   }
 
-
+  /**
+   * initNodeHandlerMap 方法的作用是初始化一个用于处理不同节点类型的映射表（nodeHandlerMap）。
+   * 每个节点类型（例如 "trim"、"where"、"set" 等）对应一个处理器（例如 TrimHandler、WhereHandler 等）。
+   * 这些处理器负责解析和处理相应的 SQL 语句节点。
+   */
   private void initNodeHandlerMap() {
     nodeHandlerMap.put("trim", new TrimHandler());
     nodeHandlerMap.put("where", new WhereHandler());
@@ -64,11 +69,14 @@ public class XMLScriptBuilder extends BaseBuilder {
   }
 
   public SqlSource parseScriptNode() {
+    // 解析动态 SQL 标签，并生成一个 MixedSqlNode 对象
     MixedSqlNode rootSqlNode = parseDynamicTags(context);
     SqlSource sqlSource;
     if (isDynamic) {
+      // 如果是包含${}符号或者包含动态SQL的元素节点
       sqlSource = new DynamicSqlSource(configuration, rootSqlNode);
     } else {
+      // 纯文本SQL，仅包含#{}
       sqlSource = new RawSqlSource(configuration, rootSqlNode, parameterType);
     }
     return sqlSource;
@@ -79,25 +87,34 @@ public class XMLScriptBuilder extends BaseBuilder {
     NodeList children = node.getNode().getChildNodes();
     for (int i = 0; i < children.getLength(); i++) {
       XNode child = node.newXNode(children.item(i));
-      if (child.getNode().getNodeType() == Node.CDATA_SECTION_NODE || child.getNode().getNodeType() == Node.TEXT_NODE) {
+      // 如果子节点是文本节点或 CDATA 节点，提取其文本内容并创建 TextSqlNode 对象
+      if (child.getNode().getNodeType() == Node.CDATA_SECTION_NODE
+        || child.getNode().getNodeType() == Node.TEXT_NODE) {
         String data = child.getStringBody("");
         TextSqlNode textSqlNode = new TextSqlNode(data);
+        // 如果是动态的，添加到 contents 列表中，并标记为动态；否则，创建一个静态文本节点并添加
         if (textSqlNode.isDynamic()) {
+          // 检查这个文本节点是否为动态，即是否包含 ${}动态表达式
           contents.add(textSqlNode);
           isDynamic = true;
         } else {
+          // 将带有#{}符号的SQL封装到StaticTextSqlNode节点上
           contents.add(new StaticTextSqlNode(data));
         }
-      } else if (child.getNode().getNodeType() == Node.ELEMENT_NODE) { // issue #628
+      } else if (child.getNode().getNodeType() == Node.ELEMENT_NODE) {
+        // 如果子节点是元素节点，获取节点名称并查找对应的处理器（NodeHandler）
         String nodeName = child.getNode().getNodeName();
+        // 获取对应的节点处理器
         NodeHandler handler = nodeHandlerMap.get(nodeName);
         if (handler == null) {
           throw new BuilderException("Unknown element <" + nodeName + "> in SQL statement.");
         }
+        // 执行具体的节点处理器解析方法
         handler.handleNode(child, contents);
         isDynamic = true;
       }
     }
+    // 将所有解析的 SQL 节点封装到 MixedSqlNode 对象中并返回
     return new MixedSqlNode(contents);
   }
 

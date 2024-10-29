@@ -5,5 +5,13 @@
 <mapper namespace="com.zy.client.mapper.UserMapper">
     <select id="selectById" resultType="com.zy.client.bean.UserBean" parameterType="com.zy.client.bean.UserBean">
         select * from t_user where id = #{id}
+        <choose>
+            <when test="name != null">
+                AND name like #{name}
+            </when>
+            <otherwise>
+                AND name = #{name}
+            </otherwise>
+        </choose>
     </select>
 </mapper>
