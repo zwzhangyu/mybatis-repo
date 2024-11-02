@@ -677,9 +677,11 @@ public class Configuration {
     } else {
       executor = new SimpleExecutor(this, transaction);
     }
+    // 如果允许缓存，默认是开启的，对executor进行包装代理
     if (cacheEnabled) {
       executor = new CachingExecutor(executor);
     }
+    // 拦截器插件
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }
