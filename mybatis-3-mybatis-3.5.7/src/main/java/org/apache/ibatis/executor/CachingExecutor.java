@@ -72,6 +72,7 @@ public class CachingExecutor implements Executor {
 
   @Override
   public int update(MappedStatement ms, Object parameterObject) throws SQLException {
+    // 如果需要刷新，则清除缓存
     flushCacheIfRequired(ms);
     return delegate.update(ms, parameterObject);
   }
@@ -92,15 +93,20 @@ public class CachingExecutor implements Executor {
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)
       throws SQLException {
+    // 获取mapper对象维护的二级缓存对象
     Cache cache = ms.getCache();
     if (cache != null) {
+      // 判断是否需要刷新二级缓存
       flushCacheIfRequired(ms);
       if (ms.isUseCache() && resultHandler == null) {
         ensureNoOutParams(ms, boundSql);
+        // 从MapperStatement对象对应的二级缓存中获取对象
         @SuppressWarnings("unchecked")
         List<E> list = (List<E>) tcm.getObject(cache, key);
         if (list == null) {
+          // 如果缓存对象不存在，则从数据库获取
           list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+          // 将数据库查询结果写入到二级缓存中
           tcm.putObject(cache, key, list); // issue #578 and #116
         }
         return list;

@@ -1,18 +1,26 @@
 package com.zy.client.test;
 
 import com.zy.client.bean.UserBean;
+import org.apache.ibatis.BaseDataTest;
+import org.apache.ibatis.binding.BoundAuthorMapper;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
+import org.apache.ibatis.domain.blog.Author;
+import org.apache.ibatis.domain.blog.Post;
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.h2.util.json.JSONObject;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.*;
+import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.sql.DataSource;
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*******************************************************
  * Created by ZhangYu on 2024/10/23
@@ -20,7 +28,7 @@ import java.util.Enumeration;
  * History   :
  *******************************************************/
 public class MybatisTest {
-
+  private static SqlSessionFactory sqlSessionFactory;
 
   @Test
   public void test4() throws IOException {
@@ -65,5 +73,25 @@ public class MybatisTest {
     XMLConfigBuilder xmlConfigBuilder = new XMLConfigBuilder(resource);
     Configuration parse = xmlConfigBuilder.parse();
     System.out.println(parse);
+  }
+
+
+  /**
+   * 测试@SelectProvider使用
+   */
+  @Test
+  public void test6() throws Exception {
+    InputStream resource = Resources.getResourceAsStream(MybatisTest.class.getClassLoader(), "mybatis-config.xml");
+    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resource);
+    Configuration configuration = sqlSessionFactory.getConfiguration();
+    // 手动注册mapper
+    configuration.addMapper(UserMapper.class);
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+    Map<String, Object> params = new HashMap<>();
+    params.put("name", "zhangSan");
+    params.put("age", 18);
+    List<Map<String, Object>> res = mapper.selectUsers(params);
+    System.out.println(res);
   }
 }

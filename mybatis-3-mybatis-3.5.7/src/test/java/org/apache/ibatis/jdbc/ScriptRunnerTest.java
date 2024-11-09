@@ -233,7 +233,6 @@ class ScriptRunnerTest extends BaseDataTest {
     when(conn.createStatement()).thenReturn(stmt);
     when(stmt.getUpdateCount()).thenReturn(-1);
     ScriptRunner runner = new ScriptRunner(conn);
-
     String sql = "-- @DELIMITER | \n"
         + "line 1;\n"
         + "line 2;\n"
