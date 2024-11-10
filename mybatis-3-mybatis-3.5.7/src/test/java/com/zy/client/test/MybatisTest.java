@@ -86,6 +86,7 @@ public class MybatisTest {
     Configuration configuration = sqlSessionFactory.getConfiguration();
     // 手动注册mapper
     configuration.addMapper(UserMapper.class);
+    configuration.setProxyFactory(new MyLoggingProxyFactory());
     SqlSession sqlSession = sqlSessionFactory.openSession();
     UserMapper mapper = sqlSession.getMapper(UserMapper.class);
     Map<String, Object> params = new HashMap<>();
