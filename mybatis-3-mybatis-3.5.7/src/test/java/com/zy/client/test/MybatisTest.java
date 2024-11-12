@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test;
 import javax.sql.DataSource;
 import java.io.*;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -94,5 +97,15 @@ public class MybatisTest {
     params.put("age", 18);
     List<Map<String, Object>> res = mapper.selectUsers(params);
     System.out.println(res);
+  }
+
+  @Test
+  public void test7() throws Exception {
+    InputStream resource = Resources.getResourceAsStream(MybatisTest.class.getClassLoader(), "mybatis-config.xml");
+    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resource);
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    Connection connection = sqlSession.getConnection();
+    Statement statement = connection.createStatement();
+    ResultSet resultSet = statement.executeQuery("select * from t_user");
   }
 }

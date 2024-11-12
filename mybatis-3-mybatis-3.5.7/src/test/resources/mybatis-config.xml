@@ -9,7 +9,9 @@
     <setting name="lazyLoadingEnabled" value="true"/>
     <setting name="aggressiveLazyLoading" value="false"/>
   </settings>
-
+  <typeHandlers>
+    <typeHandler handler="com.zy.client.test.JsonTypeHandler" javaType="java.util.List"/>
+  </typeHandlers>
 
   <environments default="development">
     <environment id="development">

@@ -1,17 +1,20 @@
 package com.zy.client.bean;
 
+import lombok.Data;
+
 /*******************************************************
  * Created by ZhangYu on 2024/10/23
  * Description :
  * History   :
  *******************************************************/
-
+@Data
 public class UserBean {
   private Integer id;
 
   private String name;
 
   private String mobile_no;
+  private MyObject jsonInfo;
 
   public Integer getId() {
     return id;
@@ -37,12 +40,5 @@ public class UserBean {
     this.mobile_no = mobile_no;
   }
 
-  @Override
-  public String toString() {
-    return "UserBean{" +
-      "id=" + id +
-      ", name='" + name + '\'' +
-      ", mobile_no='" + mobile_no + '\'' +
-      '}';
-  }
+
 }
