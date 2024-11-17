@@ -129,7 +129,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
     return lookupConstructor.newInstance(declaringClass, ALLOWED_MODES).unreflectSpecial(method, declaringClass);
   }
 
-  interface MapperMethodInvoker {
+  public interface MapperMethodInvoker {
     Object invoke(Object proxy, Method method, Object[] args, SqlSession sqlSession) throws Throwable;
   }
 

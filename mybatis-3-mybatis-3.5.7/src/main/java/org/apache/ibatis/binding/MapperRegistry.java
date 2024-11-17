@@ -42,13 +42,17 @@ public class MapperRegistry {
 
   @SuppressWarnings("unchecked")
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
+    // 获取已注册的 MapperProxyFactory 对象
     final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
     if (mapperProxyFactory == null) {
+      // 如果该 Mapper 类型没有被注册，抛出异常
       throw new BindingException("Type " + type + " is not known to the MapperRegistry.");
     }
     try {
+      // 使用 MapperProxyFactory 创建一个新的代理对象，并返回
       return mapperProxyFactory.newInstance(sqlSession);
     } catch (Exception e) {
+      // 如果在创建 Mapper 实例时发生错误，抛出 BindingException
       throw new BindingException("Error getting mapper instance. Cause: " + e, e);
     }
   }
@@ -58,16 +62,20 @@ public class MapperRegistry {
   }
 
   public <T> void addMapper(Class<T> type) {
+    // 判断是否是接口，如果不是接口，直接返回
     if (type.isInterface()) {
       if (hasMapper(type)) {
+        // 防止重复注册，如果已经注册过，则抛出异常
         throw new BindingException("Type " + type + " is already known to the MapperRegistry.");
       }
       boolean loadCompleted = false;
       try {
+        // 添加到 knownMappers（一个 Map<Class<?>, MapperProxyFactory<?>>）中
         knownMappers.put(type, new MapperProxyFactory<>(type));
         // It's important that the type is added before the parser is run
         // otherwise the binding may automatically be attempted by the
         // mapper parser. If the type is already known, it won't try.
+        // 检查该接口是否有与之关联的 XML 映射文件
         MapperAnnotationBuilder parser = new MapperAnnotationBuilder(config, type);
         parser.parse();
         loadCompleted = true;

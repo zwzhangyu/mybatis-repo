@@ -114,21 +114,28 @@ public class MapperAnnotationBuilder {
 
   public void parse() {
     String resource = type.toString();
+    // 检查资源是否已加载
     if (!configuration.isResourceLoaded(resource)) {
+      // 解析加载mapper关联的XML文件信息，如果是注解形式则为空
       loadXmlResource();
       configuration.addLoadedResource(resource);
       assistant.setCurrentNamespace(type.getName());
+      // 解析缓存和缓存引用
       parseCache();
       parseCacheRef();
+      // 获取当前 Mapper 接口中的所有方法
       for (Method method : type.getMethods()) {
+        // 调用 canHaveStatement(method) 方法检查该方法是否适合生成 MappedStatement
         if (!canHaveStatement(method)) {
           continue;
         }
+        // 处理Select和SelectProvider注解方法
         if (getAnnotationWrapper(method, false, Select.class, SelectProvider.class).isPresent()
             && method.getAnnotation(ResultMap.class) == null) {
           parseResultMap(method);
         }
         try {
+          // 解析 Mapper 方法上的注解并生成 MappedStatement
           parseStatement(method);
         } catch (IncompleteElementException e) {
           configuration.addIncompleteMethod(new MethodResolver(this, method));
@@ -296,23 +303,25 @@ public class MapperAnnotationBuilder {
   void parseStatement(Method method) {
     final Class<?> parameterTypeClass = getParameterType(method);
     final LanguageDriver languageDriver = getLanguageDriver(method);
-
+    // 获取方法上的注解
     getAnnotationWrapper(method, true, statementAnnotationTypes).ifPresent(statementAnnotation -> {
       final SqlSource sqlSource = buildSqlSource(statementAnnotation.getAnnotation(), parameterTypeClass, languageDriver, method);
       final SqlCommandType sqlCommandType = statementAnnotation.getSqlCommandType();
       final Options options = getAnnotationWrapper(method, false, Options.class).map(x -> (Options)x.getAnnotation()).orElse(null);
       final String mappedStatementId = type.getName() + "." + method.getName();
 
+      // 处理主键生成策略（KeyGenerator）
       final KeyGenerator keyGenerator;
       String keyProperty = null;
       String keyColumn = null;
       if (SqlCommandType.INSERT.equals(sqlCommandType) || SqlCommandType.UPDATE.equals(sqlCommandType)) {
-        // first check for SelectKey annotation - that overrides everything else
+        // 如果方法上有 @SelectKey 注解，使用其生成主键
         SelectKey selectKey = getAnnotationWrapper(method, false, SelectKey.class).map(x -> (SelectKey)x.getAnnotation()).orElse(null);
         if (selectKey != null) {
           keyGenerator = handleSelectKeyAnnotation(selectKey, mappedStatementId, getParameterType(method), languageDriver);
           keyProperty = selectKey.keyProperty();
         } else if (options == null) {
+          // 默认使用 JDBC3 的主键生成方式
           keyGenerator = configuration.isUseGeneratedKeys() ? Jdbc3KeyGenerator.INSTANCE : NoKeyGenerator.INSTANCE;
         } else {
           keyGenerator = options.useGeneratedKeys() ? Jdbc3KeyGenerator.INSTANCE : NoKeyGenerator.INSTANCE;
@@ -322,15 +331,17 @@ public class MapperAnnotationBuilder {
       } else {
         keyGenerator = NoKeyGenerator.INSTANCE;
       }
-
+      // 处理缓存、超时、ResultMap 等配置
       Integer fetchSize = null;
       Integer timeout = null;
+      // statementType：语句类型，默认为 PREPARED，还可以是 STATEMENT 或 CALLABLE。
       StatementType statementType = StatementType.PREPARED;
       ResultSetType resultSetType = configuration.getDefaultResultSetType();
       boolean isSelect = sqlCommandType == SqlCommandType.SELECT;
       boolean flushCache = !isSelect;
       boolean useCache = isSelect;
       if (options != null) {
+        // 从方法上的 @Options 注解中提取配置，如 flushCache、useCache、fetchSize 和 timeout。
         if (FlushCachePolicy.TRUE.equals(options.flushCache())) {
           flushCache = true;
         } else if (FlushCachePolicy.FALSE.equals(options.flushCache())) {
@@ -345,16 +356,21 @@ public class MapperAnnotationBuilder {
         }
       }
 
+      // 处理 ResultMap
       String resultMapId = null;
       if (isSelect) {
+        // 如果方法是 SELECT 查询，则可能需要 ResultMap 来映射结果集到 Java 对象。
         ResultMap resultMapAnnotation = method.getAnnotation(ResultMap.class);
         if (resultMapAnnotation != null) {
+          // 优先使用 @ResultMap 注解；如果没有，则自动生成 ResultMap。
           resultMapId = String.join(",", resultMapAnnotation.value());
         } else {
           resultMapId = generateResultMapName(method);
         }
       }
-
+      // 注册 MappedStatement
+      // 调用 assistant.addMappedStatement() 将解析好的信息封装成 MappedStatement 并注册到 MyBatis 的 Configuration 中。
+      // MappedStatement 包含了执行 SQL 所需的所有信息，包括 SQL 语句、参数类型、结果集映射、缓存策略等。
       assistant.addMappedStatement(
           mappedStatementId,
           sqlSource,
