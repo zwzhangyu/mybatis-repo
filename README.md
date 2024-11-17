@@ -1,3 +1,9 @@
+# Repo结构说明
+- mybatis-zy  自定义的Mybatis框架
+- mybatis-client  自定义的Mybatis框架客户端测试项目
+- mybatis-3-mybatis-3.5.7  mybatis源码
+
+
 # MyBatis源码分析
 
 [【MyBatis源码】MyBatis核心组件架构设计](https://zwzhangyu.blog.csdn.net/article/details/143666683)
