@@ -31,3 +31,5 @@
 [【MyBatis源码】深入分析TypeHandler原理和源码](https://zwzhangyu.blog.csdn.net/article/details/143725368)
 
 [【MyBatis源码】SqlSession执行Mapper过程](docs/【MyBatis源码】SqlSession执行Mapper过程.md)
+
+[【MyBatis源码】MapperRegistry详解](docs/【MyBatis源码】MapperRegistry详解.md)
