@@ -34,4 +34,4 @@
 
 [【MyBatis源码】MapperRegistry详解](docs/【MyBatis源码】MapperRegistry详解.md)
 
-[【MyBatis源码】MapperRegistry详解](docs/【MyBatis源码】MyBatis缓存机制源码分析.md)
+[【MyBatis源码】MyBatis缓存机制源码分析](docs/【MyBatis源码】MyBatis缓存机制源码分析.md)
