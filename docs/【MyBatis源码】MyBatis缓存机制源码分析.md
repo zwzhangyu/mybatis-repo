@@ -60,13 +60,15 @@ public interface Cache {
 }
 
 ```
-Cache接口实现类列表
-
-![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/436b41b8fe6b4116ba8784c20adbb8c8.png)
 
 BlockingCache：阻塞版本的缓存装饰器，能够保证同一时间只有一个线程到缓存中查找指定的Key对应的数据。
 FifoCache：先入先出缓存装饰器，FifoCache内部有一个维护具有长度限制的Key键值链表（LinkedList实例）和一个被装饰的缓存对象，Key值链表主要是维护Key的FIFO顺序，而缓存存储和获取则交给被装饰的缓存对象来完成
 LruCache：最近最少使用的缓存装饰器，当缓存容量满了之后，使用LRU算法淘汰最近最少使用的Key和Value。LruCache中通过重写LinkedHashMap类的removeEldestEntry()方法获取最近最少使用的Key值，将Key值保存在LruCache类的eldestKey属性中，然后在缓存中添加对象时，淘汰eldestKey对应的Value值。具体实现细节读者可参考LruCache类的源码。
+
+### Cache接口实现类列表
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/436b41b8fe6b4116ba8784c20adbb8c8.png)
+
 
 # MyBatis一级缓存实现原理
 MyBatis的一级缓存是SqlSession级别的缓存。一级缓存使用PerpetualCache实例实现，在BaseExecutor类中维护了两个PerpetualCache属性.
