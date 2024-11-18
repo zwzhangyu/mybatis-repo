@@ -61,6 +61,7 @@ public interface Cache {
 
 ```
 Cache接口实现类列表
+
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/436b41b8fe6b4116ba8784c20adbb8c8.png)
 
 BlockingCache：阻塞版本的缓存装饰器，能够保证同一时间只有一个线程到缓存中查找指定的Key对应的数据。
