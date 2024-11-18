@@ -5,6 +5,9 @@
 <configuration>
 
   <settings>
+    <setting name="cacheEnabled" value="true"/>
+
+
     <setting name="proxyFactory" value="com.zy.client.test.MyLoggingProxyFactory"/>
     <setting name="lazyLoadingEnabled" value="true"/>
     <setting name="aggressiveLazyLoading" value="false"/>
