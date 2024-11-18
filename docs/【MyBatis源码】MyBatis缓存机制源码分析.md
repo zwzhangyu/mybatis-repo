@@ -62,6 +62,7 @@ public interface Cache {
 ```
 Cache接口实现类列表
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/436b41b8fe6b4116ba8784c20adbb8c8.png)
+
 BlockingCache：阻塞版本的缓存装饰器，能够保证同一时间只有一个线程到缓存中查找指定的Key对应的数据。
 FifoCache：先入先出缓存装饰器，FifoCache内部有一个维护具有长度限制的Key键值链表（LinkedList实例）和一个被装饰的缓存对象，Key值链表主要是维护Key的FIFO顺序，而缓存存储和获取则交给被装饰的缓存对象来完成
 LruCache：最近最少使用的缓存装饰器，当缓存容量满了之后，使用LRU算法淘汰最近最少使用的Key和Value。LruCache中通过重写LinkedHashMap类的removeEldestEntry()方法获取最近最少使用的Key值，将Key值保存在LruCache类的eldestKey属性中，然后在缓存中添加对象时，淘汰eldestKey对应的Value值。具体实现细节读者可参考LruCache类的源码。
@@ -69,6 +70,7 @@ LruCache：最近最少使用的缓存装饰器，当缓存容量满了之后，
 # MyBatis一级缓存实现原理
 MyBatis的一级缓存是SqlSession级别的缓存。一级缓存使用PerpetualCache实例实现，在BaseExecutor类中维护了两个PerpetualCache属性.
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/ccabbbc6ff6b4e25b6673613671304ec.png)
+
 PerpetualCache类，该类的实现比较简单，通过一个HashMap实例存放缓存对象。需要注意的是，PerpetualCache类重写了Object类的equals()方法，当两个缓存对象的Id相同时，即认为缓存对象相同。另外，PerpetualCache类还重写了Object类的hashCode()方法，仅以缓存对象的Id作为因子生成hashCode。
 
 其中，localCache属性用于缓存MyBatis查询结果，localOutputParameterCache属性用于缓存存储过程调用结果。MyBatis通过CacheKey对象来描述缓存的Key值。在进行查询操作时，首先创建CacheKey对象（CacheKey对象决定了缓存的Key与哪些因素有关系）​。如果两次查询操作CacheKey对象相同，就认为这两次查询执行的是相同的SQL语句。
