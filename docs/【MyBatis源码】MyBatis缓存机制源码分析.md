@@ -69,7 +69,7 @@ LruCache：最近最少使用的缓存装饰器，当缓存容量满了之后，
 
 # MyBatis一级缓存实现原理
 MyBatis的一级缓存是SqlSession级别的缓存。一级缓存使用PerpetualCache实例实现，在BaseExecutor类中维护了两个PerpetualCache属性.
-![在这里插入图片描述](https://github.com/zwzhangyu/mybatis-repo/blob/main/img/1.png)
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/c8158d78186549a18fcf7857dff0d9ce.png)
 
 PerpetualCache类，该类的实现比较简单，通过一个HashMap实例存放缓存对象。需要注意的是，PerpetualCache类重写了Object类的equals()方法，当两个缓存对象的Id相同时，即认为缓存对象相同。另外，PerpetualCache类还重写了Object类的hashCode()方法，仅以缓存对象的Id作为因子生成hashCode。
 
@@ -112,7 +112,6 @@ PerpetualCache类，该类的实现比较简单，通过一个HashMap实例存�
     return list;
   }
 ```
-![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/c8158d78186549a18fcf7857dff0d9ce.png)
 在BaseExecutor类的query()方法中，首先根据缓存Key从localCache属性中查找是否有缓存对象，如果查找不到，则调用queryFromDatabase()方法从数据库中获取数据，然后将数据写入localCache对象中。如果localCache中缓存了本次查询的结果，则直接从缓存中获取。
 需要注意的是，如果localCacheScope属性设置为STATEMENT，则每次查询操作完成后，都会调用clearLocalCache()方法清空缓存。
 除此之外，MyBatis会在执行完任意更新语句后清空缓存，我们可以看一下BaseExecutor类的update()方法。
