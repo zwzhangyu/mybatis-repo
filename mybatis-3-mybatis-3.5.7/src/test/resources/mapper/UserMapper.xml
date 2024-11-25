@@ -6,14 +6,30 @@
 
   <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
 
+<!--  <select id="selectById"-->
+<!--          flushCache="true"-->
+<!--          useCache="true"-->
+<!--          resultType="com.zy.client.bean.UserBean"-->
+<!--          parameterType="com.zy.client.bean.UserBean">-->
+<!--    select *-->
+<!--    from t_user-->
+<!--    where id = #{id}-->
+<!--      and name = #{name}-->
+<!--  </select>-->
+
   <select id="selectById"
           flushCache="true"
           useCache="true"
           resultType="com.zy.client.bean.UserBean"
           parameterType="com.zy.client.bean.UserBean">
-    select *
-    from t_user
-    where id = #{id}
+    select * from t_user where 1=1
+     <if test="id != null">
+        and   id = #{id}
+     </if>
+    <if test="name != null">
       and name = #{name}
+    </if>
   </select>
+
+
 </mapper>

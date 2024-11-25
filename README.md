@@ -35,3 +35,7 @@
 [【MyBatis源码】MapperRegistry详解](docs/【MyBatis源码】MapperRegistry详解.md)
 
 [【MyBatis源码】MyBatis缓存机制源码分析](docs/【MyBatis源码】MyBatis缓存机制源码分析.md)
+
+[【MyBatis源码】MyBatis插件原理及源码分析](docs/MyBatis插件原理及源码分析.md)
+
+[【MyBatis源码】自定义MyBatis分页插件和自定义慢SQL统计插件实践](docs/自定义MyBatis分页插件和自定义慢SQL统计插件实践.md)
