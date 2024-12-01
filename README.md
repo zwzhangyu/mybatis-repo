@@ -39,3 +39,7 @@
 [【MyBatis源码】MyBatis插件原理及源码分析](docs/MyBatis插件原理及源码分析.md)
 
 [【MyBatis源码】自定义MyBatis分页插件和自定义慢SQL统计插件实践](docs/自定义MyBatis分页插件和自定义慢SQL统计插件实践.md)
+
+[【MyBatis源码】异常拆包工具ExceptionUtil](docs/【MyBatis源码】异常拆包工具ExceptionUtil.md)
+
+[【MyBatis源码】MyBatis异常体系中ErrorContext和ExceptionFactory原理分析](docs/MyBatis异常体系中ErrorContext和ExceptionFactory原理分析.md)
