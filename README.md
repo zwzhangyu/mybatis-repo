@@ -43,3 +43,5 @@
 [【MyBatis源码】异常拆包工具ExceptionUtil](docs/【MyBatis源码】异常拆包工具ExceptionUtil.md)
 
 [【MyBatis源码】MyBatis异常体系中ErrorContext和ExceptionFactory原理分析](docs/MyBatis异常体系中ErrorContext和ExceptionFactory原理分析.md)
+
+[【MyBatis源码】详解datasource包，DataSourceFactory，数据库连接池](docs/【MyBatis源码】详解datasource包，DataSourceFactory，数据库连接池.md)

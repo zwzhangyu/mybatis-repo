@@ -310,6 +310,12 @@
           <version>5.3.33</version>
           <scope>test</scope>
       </dependency>
+      <dependency>
+          <groupId>com.zaxxer</groupId>
+          <artifactId>HikariCP</artifactId>
+          <version>4.0.3</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
   <build>
