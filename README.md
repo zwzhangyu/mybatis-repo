@@ -46,4 +46,4 @@
 
 [【MyBatis源码】详解datasource包，DataSourceFactory，数据库连接池](docs/【MyBatis源码】详解datasource包，DataSourceFactory，数据库连接池.md)
 
-[【MyBatis源码】transaction包JdbcTransaction和 ManagedTransaction源码分析](docs/【MyBatis源码】transaction包JdbcTransaction和 ManagedTransaction源码分析.md)
+[【MyBatis源码】详解datasource包，DataSourceFactory，数据库连接池](docs/【MyBatis源码】详解datasource包，DataSourceFactory，数据库连接池.md)
