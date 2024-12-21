@@ -134,7 +134,6 @@ public class XMLConfigBuilder extends BaseBuilder {
                 Class<?> mapperInterface = Resources.classForName(mapperClass);
                 configuration.addMapper(mapperInterface);
             }
-
         }
     }
 

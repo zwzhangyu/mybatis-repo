@@ -1,4 +1,4 @@
-package cn.bugstack.mybatis.test.po;
+package com.zy.client.result.po;
 
 import lombok.Data;
 

@@ -30,7 +30,7 @@ public class MapperTest {
     configuration.setProxyFactory(new MyLoggingProxyFactory());
     SqlSession sqlSession = sqlSessionFactory.openSession();
     UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-    UserBean res = mapper.selectDataById(1);
-    System.out.println(res);
+//    UserBean res = mapper.selectDataById(1);
+//    System.out.println(res);
   }
 }

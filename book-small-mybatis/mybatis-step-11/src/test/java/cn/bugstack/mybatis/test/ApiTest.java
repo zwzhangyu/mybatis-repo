@@ -63,4 +63,26 @@ public class ApiTest {
         logger.info("测试结果：{}", JSON.toJSONString(user));
     }
 
+    @Test
+    public void test_queryUserInfo1() {
+        // 1. 获取映射器对象
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+
+        // 2. 测试验证：对象参数
+        List<User> userList = userDao.listUserInfo(new User(1L, "10001"));
+        logger.info("测试结果：{}", JSON.toJSONString(userList));
+    }
+
+
+    @Test
+    public void test_queryUserInfo2() {
+        // 1. 获取映射器对象
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+
+        // 2. 测试验证：对象参数
+        List<User> userList = userDao.listUserOrderInfo(new User(1L, "10001"));
+        logger.info("测试结果：{}", JSON.toJSONString(userList));
+    }
+
+
 }

@@ -35,8 +35,8 @@ public class TypeHandlerTest {
     configuration.setProxyFactory(new MyLoggingProxyFactory());
     SqlSession sqlSession = sqlSessionFactory.openSession();
     UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-    UserBean userBean = mapper.selectDataById(1);
-    System.out.println(userBean);
+//    UserBean userBean = mapper.selectDataById(1);
+//    System.out.println(userBean);
   }
 
   @Test

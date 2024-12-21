@@ -25,10 +25,25 @@ import java.util.*;
  */
 public class MapperAnnotationBuilder {
 
+    /**
+     * 收集 MyBatis 所支持的 SQL 注解类型，
+     * 这些注解用于标记 Mapper 接口方法上执行的 SQL 操作。
+     */
     private final Set<Class<? extends Annotation>> sqlAnnotationTypes = new HashSet<>();
 
+    /**
+     * Configuration 对象存储了 MyBatis 的全局配置信息，包括数据库连接信息、缓存配置、类型处理器、SQL 会话配置等。
+     */
     private Configuration configuration;
+
+    /**
+     * 在 MapperAnnotationBuilder 中，它被用来将通过注解解析出的 SQL 语句注册到 Configuration 中
+     */
     private MapperBuilderAssistant assistant;
+
+    /**
+     * type 表示当前 Mapper 接口的类型，它是通过反射获取的。通过 type，MyBatis 能够访问到当前接口的所有方法，并进一步解析这些方法上的注解。
+     */
     private Class<?> type;
 
     public MapperAnnotationBuilder(Configuration configuration, Class<?> type) {

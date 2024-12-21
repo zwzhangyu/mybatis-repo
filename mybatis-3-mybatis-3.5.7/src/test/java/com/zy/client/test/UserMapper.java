@@ -2,6 +2,7 @@ package com.zy.client.test;
 
 import com.zy.client.bean.MyObject;
 import com.zy.client.bean.UserBean;
+import com.zy.client.result.po.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Select;
@@ -22,8 +23,7 @@ public interface UserMapper {
   List<Map<String, Object>> selectUsers(Map<String, Object> params);
 
 
+  List<User> listUserOrderInfo(User req);
 
-  @Select("select * from t_user where id=#{id}")
-  @Result(column = "jsonInfo", property = "jsonInfo", typeHandler = JsonTypeHandler.class)
-  UserBean selectDataById(int id);
+  UserBean selectById(int id);
 }

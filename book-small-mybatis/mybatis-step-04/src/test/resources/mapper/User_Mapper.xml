@@ -5,7 +5,7 @@
     <select id="queryUserInfoById" parameterType="java.lang.Long" resultType="cn.bugstack.mybatis.test.po.User">
         SELECT id, userId, userHead, createTime
         FROM user
-        where id = #{id}
+        where id = #{id} and name=#{name}
     </select>
 
 </mapper>
