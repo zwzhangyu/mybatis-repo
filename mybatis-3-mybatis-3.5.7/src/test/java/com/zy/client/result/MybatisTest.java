@@ -43,7 +43,7 @@ public class MybatisTest {
     configuration.setProxyFactory(new MyLoggingProxyFactory());
     SqlSession sqlSession = sqlSessionFactory.openSession();
     UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-    List<User> users = mapper.listUserOrderInfo(new User(1L, "10001"));
-    System.out.println(users);
+//    List<User> users = mapper.listUserOrderInfo(new User(1L, "10001"));
+//    System.out.println(users);
   }
 }

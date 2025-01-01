@@ -19,11 +19,15 @@ import java.util.Map;
 @Mapper
 public interface UserMapper {
 
-  @SelectProvider(type = UserSqlProvider.class, method = "buildSelectSql")
-  List<Map<String, Object>> selectUsers(Map<String, Object> params);
+//  @SelectProvider(type = UserSqlProvider.class, method = "buildSelectSql")
+//  List<Map<String, Object>> selectUsers(Map<String, Object> params);
+//
+//
+//  List<User> listUserOrderInfo(User req);
+//
+//  UserBean selectById(int id);
+//
+List<UserBean> queryUserInfo(String userName, Long id, String mobileNo);
 
 
-  List<User> listUserOrderInfo(User req);
-
-  UserBean selectById(int id);
 }

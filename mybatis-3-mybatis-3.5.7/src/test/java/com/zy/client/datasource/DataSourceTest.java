@@ -27,7 +27,7 @@ public class DataSourceTest {
     SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resource);
     SqlSession sqlSession = sqlSessionFactory.openSession();
     UserBean userBean = new UserBean();
-    userBean.setId(1);
+    userBean.setId(1L);
     Object objects1 = sqlSession.selectOne("user.selectById", userBean);
     System.out.println(objects1);
   }

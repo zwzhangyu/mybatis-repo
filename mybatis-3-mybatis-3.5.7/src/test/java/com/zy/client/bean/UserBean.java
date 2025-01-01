@@ -2,43 +2,34 @@ package com.zy.client.bean;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /*******************************************************
- * Created by ZhangYu on 2024/10/23
- * Description :
- * History   :
+ * Created by ZhangYu on 2024/12/26
+ * Description : 测试用户对象Bean
  *******************************************************/
 @Data
 public class UserBean {
-  private Integer id;
 
-  private String name;
+    private Long id;
 
-  private String mobile_no;
-  private MyObject jsonInfo;
+    // 用户ID
+    private String userId;
 
-  public Integer getId() {
-    return id;
-  }
+    // 用户名称
+    private String userName;
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    // 用户手机号
+    private String mobileNo;
 
-  public String getName() {
-    return name;
-  }
+    // 用户地址
+    private String address;
 
-  public void setName(String name) {
-    this.name = name;
-  }
 
-  public String getMobile_no() {
-    return mobile_no;
-  }
+    // 创建时间
+    private Date createTime;
 
-  public void setMobile_no(String mobile_no) {
-    this.mobile_no = mobile_no;
-  }
-
+    // 更新时间
+    private Date updateTime;
 
 }

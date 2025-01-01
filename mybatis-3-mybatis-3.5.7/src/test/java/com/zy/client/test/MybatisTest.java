@@ -62,7 +62,7 @@ public class MybatisTest {
     SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resource);
     SqlSession sqlSession = sqlSessionFactory.openSession();
     UserBean userBean = new UserBean();
-    userBean.setId(1);
+    userBean.setId(1L);
     Object objects1 = sqlSession.selectOne("user.selectById", userBean);
     System.out.println(objects1);
   }
@@ -95,8 +95,8 @@ public class MybatisTest {
     Map<String, Object> params = new HashMap<>();
     params.put("name", "zhangSan");
     params.put("age", 18);
-    List<Map<String, Object>> res = mapper.selectUsers(params);
-    System.out.println(res);
+//    List<Map<String, Object>> res = mapper.selectUsers(params);
+//    System.out.println(res);
   }
 
   @Test

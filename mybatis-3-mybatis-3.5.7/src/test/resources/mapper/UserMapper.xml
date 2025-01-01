@@ -56,4 +56,12 @@
     <result property="amount" column="order_amount"/>
   </resultMap>
 
+
+  <select id="queryUserInfo" resultType="com.zy.client.bean.UserBean">
+    SELECT userId, mobileNo, userName, address
+    FROM t_user
+    where userName = #{param1}  and  id=#{param2}  and  mobileNo=#{param3}
+  </select>
+
+
 </mapper>

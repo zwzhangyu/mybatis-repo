@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,5 +33,22 @@ public class MapperTest {
     UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 //    UserBean res = mapper.selectDataById(1);
 //    System.out.println(res);
+  }
+
+
+  @org.junit.Test
+  public void queryUserInfo() {
+    String resource = "mybatis-config.xml";
+    Reader reader;
+    try {
+      reader = Resources.getResourceAsReader(resource);
+      SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+      SqlSession session = sqlMapper.openSession();
+      UserMapper userMapper = session.getMapper(UserMapper.class);
+      List<UserBean> userBeanResult = userMapper.queryUserInfo("zhangsan",1L,"1880031231");
+      System.out.println(userBeanResult);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
