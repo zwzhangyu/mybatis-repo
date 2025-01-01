@@ -14,8 +14,6 @@ import java.sql.SQLException;
 /**
  * @author zhangyu
  * @description 默认的 DefaultSqlSessionFactory
- *
- *
  */
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
 
@@ -45,5 +43,4 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
             throw new RuntimeException("Error opening session.  Cause: " + e);
         }
     }
-
 }

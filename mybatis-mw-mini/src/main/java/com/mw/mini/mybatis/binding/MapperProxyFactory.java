@@ -9,10 +9,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 用于创建 MapperProxy 的实例，生成 Mapper 接口的动态代理对象
+ *
  * @author zhangyu
- * @description 用于创建 MapperProxy 的实例，生成 Mapper 接口的动态代理对象
- * 
- * 
  */
 public class MapperProxyFactory<T> {
 
@@ -33,6 +32,7 @@ public class MapperProxyFactory<T> {
 
     /**
      * 创建 MapperProxy 的实例，生成指定 Mapper 接口的动态代理对象
+     *
      * @param sqlSession
      * @return
      */

@@ -30,12 +30,10 @@ public class MapperScannerConfigurer implements BeanDefinitionRegistryPostProces
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         try {
-            // classpath*:cn/bugstack/**/dao/**/*.class
+            // classpath*:com/**/dao/**/*.class
             String packageSearchPath = "classpath*:" + basePackage.replace('.', '/') + "/**/*.class";
-
             ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
             Resource[] resources = resourcePatternResolver.getResources(packageSearchPath);
-
             for (Resource resource : resources) {
                 MetadataReader metadataReader = new SimpleMetadataReader(resource, ClassUtils.getDefaultClassLoader());
 
