@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.bugstack.middleware.mybatis.boot.autoconfigure.MybatisAutoConfiguration
