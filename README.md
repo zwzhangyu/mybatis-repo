@@ -1,14 +1,16 @@
 # Repo结构说明
-- mybatis-zy  自定义的Mybatis框架
+- mybatis-mw-mini 自定义的Mybatis框架
 - mybatis-client  自定义的Mybatis框架客户端测试项目
 - mybatis-3-mybatis-3.5.7  mybatis源码
 
 
 # MyBatis源码分析
 
-[【MyBatis源码】MyBatis核心组件架构设计](https://zwzhangyu.blog.csdn.net/article/details/143666683)
+[【MyBatis源码】从0到1手写自定义 MyBatis 框架](docs/【MyBatis源码】从0到1手写自定义MyBatis框架.md)
 
-[【MyBatis源码】Class.getResource和ClassLoader.getResource的区别](https://zwzhangyu.blog.csdn.net/article/details/143271403)
+[【MyBatis源码】MyBatis核心组件架构设计](docs/【MyBatis源码】MyBatis核心组件架构设计.md)
+
+[【MyBatis源码】Class.getResource和ClassLoader.getResource的区别](docs/【MyBatis源码】Class.getResource和ClassLoader.getResource的区别.md)
 
 [【MyBatis源码】SqlSessionFactoryBuilder源码分析](https://zwzhangyu.blog.csdn.net/article/details/143272095)
 
